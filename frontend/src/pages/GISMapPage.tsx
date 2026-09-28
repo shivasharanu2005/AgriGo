@@ -666,12 +666,12 @@ export const GISMapPage: React.FC = () => {
       await detectLiveLocation();
 
       if (
-        currentLocation?.latitude !== undefined &&
-        currentLocation?.longitude !== undefined
+        currentLocation?.lat !== undefined &&
+        currentLocation?.lng !== undefined
       ) {
         const point = validLatLng(
-          currentLocation.latitude,
-          currentLocation.longitude
+          currentLocation.lat,
+          currentLocation.lng
         );
 
         if (point) {
@@ -689,12 +689,12 @@ export const GISMapPage: React.FC = () => {
 
   useEffect(() => {
     if (
-      currentLocation?.latitude !== undefined &&
-      currentLocation?.longitude !== undefined
+      currentLocation?.lat !== undefined &&
+      currentLocation?.lng !== undefined
     ) {
       const point = validLatLng(
-        currentLocation.latitude,
-        currentLocation.longitude
+        currentLocation.lat,
+        currentLocation.lng
       );
 
       if (point) {
