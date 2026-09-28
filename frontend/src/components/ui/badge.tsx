@@ -1,0 +1,3 @@
+import type { HTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
+export function Badge({ className, variant = "default", ...props }: HTMLAttributes<HTMLSpanElement> & { variant?: "default" | "secondary" | "outline" | "destructive" }) { const tone = variant === "secondary" ? "bg-stone-100 text-stone-700" : variant === "outline" ? "border border-stone-300 bg-white text-stone-700" : variant === "destructive" ? "bg-rose-100 text-rose-700" : "bg-emerald-100 text-emerald-700"; return <span className={cn("inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium", tone, className)} {...props} />; }

@@ -1,0 +1,6 @@
+{
+  "name": "AgriVision AI — Intelligent Agriculture Platform",
+  "description": "Intelligent Farmer Decision Support & Crop Advisory Platform for Smart India Hackathon featuring AI crop disease detection, recommendation engine, yield prediction, weather intelligence, GIS outbreak monitoring, and voice assistant.",
+  "requestFramePermissions": ["geolocation", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

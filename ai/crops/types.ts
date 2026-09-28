@@ -1,0 +1,46 @@
+import { CropCategory } from '../../backend/server/types.ts';
+
+export interface CropProfile {
+  name: string;
+  scientificName: string;
+  hindiName: string;
+  category: CropCategory;
+  popularVarieties: string[];
+  minN: number;
+  maxN: number;
+  optN: number;
+  minP: number;
+  maxP: number;
+  optP: number;
+  minK: number;
+  maxK: number;
+  optK: number;
+  minPh: number;
+  maxPh: number;
+  optPh: number;
+  minTemp: number;
+  maxTemp: number;
+  optTemp: number;
+  minHumidity: number;
+  maxHumidity: number;
+  minRainfall: number;
+  maxRainfall: number;
+  optRainfall: number;
+  suitableSoils: string[];
+  seasons: string[];
+  growingPeriodDays: string;
+  durationDays: number;
+  waterRequirement: 'Low' | 'Moderate' | 'High';
+  mspOrBenchmarkPrice: string;
+  estimatedCostPerAcre: number;
+  estimatedGrossReturnPerAcre: number;
+  estimatedNetProfitPerAcre: number;
+  expectedYieldPerAcre: string;
+  sowingWindow: string;
+  harvestWindow: string;
+  recommendedFertilizerDose: string;
+  irrigationScheduleHint: string;
+  marketProspect: string;
+  agronomicDescription: string;
+  riskFactors: string[];
+}

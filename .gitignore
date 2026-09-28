@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+/.pnpm-store
+
+# Production build output
+dist/
+build/
+frontend/dist/
+
+# Virtual Environments & Python
+.venv/
+.venv*/
+venv/
+ENV/
+env/
+__pycache__/
+*.pyc
+
+# Environment files & Secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+cookies.txt
+
+# Logs & Debug
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS & IDE Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

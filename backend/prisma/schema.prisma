@@ -1,0 +1,158 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String          @id @default(uuid())
+  name              String
+  email             String          @unique
+  phone             String?
+  passwordHash      String
+  role              String          @default("FARMER") // 'FARMER' | 'OFFICER' | 'ADMIN'
+  status            String          @default("ACTIVE") // 'REGISTERED' | 'VERIFIED' | 'ACTIVE' | 'INACTIVE'
+  language          String          @default("en")
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  lastLogin         DateTime?
+  farmerProfile     FarmerProfile?
+  farms             Farm[]
+  diseaseDetections DiseaseDetection[]
+  insurancePolicies InsurancePolicy[]
+  insuranceClaims   InsuranceClaim[]
+}
+
+model FarmerProfile {
+  id                String   @id @default(uuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id])
+  state             String
+  district          String
+  taluk             String
+  village           String
+  pincode           String?
+  lat               Float?
+  lng               Float?
+  totalAcreage      Float?
+  preferredLanguage String   @default("en")
+}
+
+model Farm {
+  id                String   @id @default(uuid())
+  farmerId          String
+  farmer            User     @relation(fields: [farmerId], references: [id])
+  name              String
+  areaAcres         Float
+  lat               Float?
+  lng               Float?
+  village           String
+  taluk             String
+  district          String
+  state             String
+  irrigationType    String?
+  waterAvailability String?
+  healthScore       Float?
+  riskLevel         String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  crops             Crop[]
+}
+
+model Crop {
+  id                  String   @id @default(uuid())
+  farmId              String
+  farm                Farm     @relation(fields: [farmId], references: [id])
+  name                String
+  variety             String
+  sowingDate          DateTime?
+  expectedHarvestDate DateTime?
+  season              String?
+  growthStage         String?
+  healthScore         Float?
+  areaAcres           Float?
+  status              String   @default("ACTIVE")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model DiseaseDetection {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  crop             String?
+  disease          String
+  confidence       Float
+  severity         String?
+  detectedAt       DateTime @default(now())
+  imageUrl         String?
+  message          String?
+  symptoms         String?  // JSON string
+  recommendedActions String? // JSON string
+}
+
+model InsuranceScheme {
+  id                 String   @id @default(uuid())
+  name               String
+  category           String
+  state              String?
+  description        String?
+  officialUrl        String?
+  eligibility        String?
+  requiredDocuments  String? // JSON string
+  active             Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model InsurancePolicy {
+  id                         String   @id @default(uuid())
+  farmerId                   String
+  farmer                     User     @relation(fields: [farmerId], references: [id])
+  schemeId                   String?
+  crop                       String
+  variety                    String?
+  season                     String
+  year                       Int
+  area                       Float
+  status                     String   @default("Under Review") // 'Active' | 'Under Review' | 'Claim Filed'
+  estimatedPremium           Float?
+  sumInsured                 Float?
+  officialApplicationReference String?
+  insurer                    String?
+  startDate                  DateTime?
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+}
+
+model InsuranceClaim {
+  id               String   @id @default(uuid())
+  policyId         String
+  farmerId         String
+  farmer           User     @relation(fields: [farmerId], references: [id])
+  lossType         String?
+  lossDate         DateTime?
+  reportedAt       DateTime @default(now())
+  description      String?
+  evidenceUrl      String?
+  status           String   @default("Pending")
+  claimReference   String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  actor       String
+  action      String
+  entity      String
+  entityId    String?
+  timestamp   DateTime @default(now())
+  details     String?  // JSON string
+}
